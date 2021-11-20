@@ -2,8 +2,8 @@ let db;
 let budgetVersion;
 
 // Create a new db request for a "budget" database.
-const request = indexedDB.open('BudgetDB', budgetVersion || 21);
-
+const request = indexedDB.open('BudgetDB', budgetVersion || 1);
+// need to change database names
 request.onupgradeneeded = function (e) {
 
   const { oldVersion } = e;
@@ -14,9 +14,9 @@ request.onupgradeneeded = function (e) {
     db.createObjectStore('BudgetStore', { autoIncrement: true });
   }
 };
-
+// need to change database names
 request.onerror = function (e) {
-  console.log(`Woops! ${e.target.errorCode}`);
+  console.log(`${e.target.errorCode}`);
 };
 
 function checkDatabase() {
@@ -59,17 +59,16 @@ function checkDatabase() {
     }
   };
 }
-
+// need to change database names
 request.onsuccess = function (e) {
   db = e.target.result;
 
   // Check if app is online before reading from db
   if (navigator.onLine) {
-    console.log('Backend online! 🗄️');
     checkDatabase();
   }
 };
-
+// need to change database names
 const saveRecord = (record) => {
   // Create a transaction on the BudgetStore db with readwrite access
   const transaction = db.transaction(['BudgetStore'], 'readwrite');
